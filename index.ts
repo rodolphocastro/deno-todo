@@ -1,21 +1,26 @@
-import { Todo } from "./Models/Todo.ts";
+import { TodoState } from "./state.ts";
 import { Application, Router } from "https://deno.land/x/oak/mod.ts";
 
-const todoDatabase = new Map<string, Todo>();
-todoDatabase.set('myTodo', {    
-    createdOn: new Date(),
-    title: "My Todo",
-    description: "My first todo"
-})
+const state = new TodoState();
+state.insert({
+  createdOn: new Date(),
+  title: "My First Todo",
+  description: "This is my first todo!",
+});
 
 const router = new Router();
-router    
-    .get("/", (ctx) => {
-        ctx.response.body = 'my api';
-    })
-    .get("/todos", (context) => {
-        context.response.body = Array.from(todoDatabase);
-    })
+router
+  .get("/", (ctx) => {
+    ctx.response.body = "Acesse o endpoint /todos/";
+  })
+  .get("/todos", (context) => {
+    context.response.body = Array.from(state.get());
+  })
+  .get("/todos/:id", (ctx) => {
+    if (ctx.params && ctx.params.id) {
+      ctx.response.body = state.get().filter((t) => t.title == ctx.params.id);
+    }
+  });
 
 const app = new Application();
 app.use(router.routes());
