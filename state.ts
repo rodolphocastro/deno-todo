@@ -1,23 +1,26 @@
 import { Todo } from "./Models/Todo.ts";
 
 export interface AppState<T> {
-  get(): Set<T>;
+  get(): Array<T>;
   insert(newObject: T): void;
   remove(existingObject: T): void;
 }
 
 export class TodoState implements AppState<Todo> {
-  private todos = new Set<Todo>();
+  private todos = new Array<Todo>();
 
   get() {
     return this.todos;
   }
 
   insert(newTodo: Todo): void {
-    this.todos.add(newTodo);
+    this.todos.push(newTodo);
   }
 
   remove(todo: Todo): void {
-    this.todos.delete(todo);
+    const index = this.todos.indexOf(todo);
+    if (index >= 0) {
+        this.todos.splice(index, 1);
+    }
   }
 }
