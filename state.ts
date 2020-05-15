@@ -9,7 +9,7 @@ export interface AppState<T> {
 export class TodoState implements AppState<Todo> {
   private todos = new Array<Todo>();
 
-  get() {
+  get(): Array<Todo> {
     return this.todos;
   }
 
@@ -20,7 +20,7 @@ export class TodoState implements AppState<Todo> {
   remove(todo: Todo): void {
     const index = this.todos.indexOf(todo);
     if (index >= 0) {
-        this.todos.splice(index, 1);
+      this.todos.splice(index, 1);
     }
   }
 }
