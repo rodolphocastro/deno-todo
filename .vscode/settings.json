@@ -1,5 +1,0 @@
-{
-    "[typescript]": {
-        "editor.defaultFormatter": "justjavac.vscode-deno"
-    }
-}
