@@ -1,5 +1,5 @@
 import { TodoState } from "./state.ts";
-import { Application, Router } from "https://deno.land/x/oak/mod.ts";
+import { Application, Router } from "https://deno.land/x/oak@v4.0.0/mod.ts";
 
 const state = new TodoState();
 state.insert({
@@ -9,6 +9,7 @@ state.insert({
 });
 
 const router = new Router();
+
 router
   .get("/", (ctx) => {
     ctx.response.body = "Acesse o endpoint /todos/";
