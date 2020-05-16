@@ -11,15 +11,16 @@ state.insert({
 const router = new Router();
 
 router
-  .get("/", (ctx) => {
-    ctx.response.body = "Acesse o endpoint /todos/";
+  .get("/", ({ response }) => {
+    response.body = "Acesse o endpoint /todos/";
   })
-  .get("/todos", (context) => {
-    context.response.body = Array.from(state.get());
+  .get("/todos", ({ response }) => {
+    response.body = state.get();
   })
-  .get("/todos/:id", (ctx) => {
-    if (ctx.params && ctx.params.id) {
-      ctx.response.body = state.get().filter((t) => t.title == ctx.params.id);
+  .get("/todos/:id", ({ params, response }) => {
+    const { id } = params;
+    if (id) {
+      response.body = state.get().filter((t) => t.title == params.id);
     }
   });
 
